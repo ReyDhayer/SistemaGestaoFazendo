@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
@@ -10,7 +9,8 @@ import {
   Settings, 
   Menu, 
   X,
-  Truck
+  Truck,
+  Utensils
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -111,6 +111,14 @@ const MainLayout = ({ children }: MainLayoutProps) => {
               onClick={closeSidebar}
             >
               Produtos
+            </SidebarLink>
+            <SidebarLink 
+              to="/tables" 
+              icon={Utensils} 
+              isActive={location.pathname.startsWith('/tables')} 
+              onClick={closeSidebar}
+            >
+              Mesas
             </SidebarLink>
             <SidebarLink 
               to="/clients" 
