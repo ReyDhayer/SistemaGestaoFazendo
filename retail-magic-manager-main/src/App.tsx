@@ -1,9 +1,8 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
@@ -18,33 +17,175 @@ import Reports from "./pages/Reports";
 import Suppliers from "./pages/Suppliers";
 import SupplierDetail from "./pages/SupplierDetail";
 import MainLayout from "./components/layout/MainLayout";
+import Login from './pages/Login';
+import './App.css';
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/dashboard" element={<MainLayout><Dashboard /></MainLayout>} />
-          <Route path="/products" element={<MainLayout><Products /></MainLayout>} />
-          <Route path="/products/:id" element={<MainLayout><ProductDetail /></MainLayout>} />
-          <Route path="/clients" element={<MainLayout><Clients /></MainLayout>} />
-          <Route path="/clients/:id" element={<MainLayout><ClientDetail /></MainLayout>} />
-          <Route path="/suppliers" element={<MainLayout><Suppliers /></MainLayout>} />
-          <Route path="/suppliers/:id" element={<MainLayout><SupplierDetail /></MainLayout>} />
-          <Route path="/sales" element={<MainLayout><Sales /></MainLayout>} />
-          <Route path="/sales/:id" element={<MainLayout><SaleDetail /></MainLayout>} />
-          <Route path="/reports" element={<MainLayout><Reports /></MainLayout>} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  // Simulando autenticação - em um app real, isso viria de um contexto/estado
+  const isAuthenticated = true;
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <Router>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            
+            {/* Rotas protegidas */}
+            <Route 
+              path="/" 
+              element={
+                isAuthenticated ? (
+                  <MainLayout>
+                    <Dashboard />
+                  </MainLayout>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
+            <Route 
+              path="/products" 
+              element={
+                isAuthenticated ? (
+                  <MainLayout>
+                    <Products />
+                  </MainLayout>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
+            <Route 
+              path="/products/:id" 
+              element={
+                isAuthenticated ? (
+                  <MainLayout>
+                    <ProductDetail />
+                  </MainLayout>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
+            <Route 
+              path="/clients" 
+              element={
+                isAuthenticated ? (
+                  <MainLayout>
+                    <Clients />
+                  </MainLayout>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
+            <Route 
+              path="/clients/:id" 
+              element={
+                isAuthenticated ? (
+                  <MainLayout>
+                    <ClientDetail />
+                  </MainLayout>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
+            <Route 
+              path="/suppliers" 
+              element={
+                isAuthenticated ? (
+                  <MainLayout>
+                    <Suppliers />
+                  </MainLayout>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
+            <Route 
+              path="/suppliers/:id" 
+              element={
+                isAuthenticated ? (
+                  <MainLayout>
+                    <SupplierDetail />
+                  </MainLayout>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
+            <Route 
+              path="/sales" 
+              element={
+                isAuthenticated ? (
+                  <MainLayout>
+                    <Sales />
+                  </MainLayout>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
+            <Route 
+              path="/sales/:id" 
+              element={
+                isAuthenticated ? (
+                  <MainLayout>
+                    <SaleDetail />
+                  </MainLayout>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
+            <Route 
+              path="/reports" 
+              element={
+                isAuthenticated ? (
+                  <MainLayout>
+                    <Reports />
+                  </MainLayout>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
+            <Route 
+              path="/settings" 
+              element={
+                isAuthenticated ? (
+                  <MainLayout>
+                    <Settings />
+                  </MainLayout>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
+            {/* Rota de fallback */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Router>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
