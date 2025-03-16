@@ -26,7 +26,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename="/retail-magic-manager">
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/dashboard" element={<MainLayout><Dashboard /></MainLayout>} />
