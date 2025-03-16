@@ -5,16 +5,12 @@ on:
     branches:
       - main
 
-# Configuração de permissões necessárias
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    concurrency: ci-${{ github.ref }}
 
     steps:
       - name: Checkout 🛎️
@@ -33,10 +29,7 @@ jobs:
         run: npm run build
 
       - name: Deploy 🚀
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages
-          full_commit_message: ${{ github.event.head_commit.message }}
-          force_orphan: true 
+          folder: dist
+          branch: gh-pages 
